@@ -5,6 +5,12 @@ public class Product {
 	private String name;
 	private float price;
 	private int status;
+	
+	// pagination
+	private Integer page;
+	private Integer maxPageItem;
+	private Integer totalPage;
+	private Integer totalItem;
 
 	public Product() {
 		// TODO Auto-generated constructor stub
@@ -48,6 +54,39 @@ public class Product {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	
+
+	public Integer getPage() {
+		return page;
+	}
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+	public Integer getMaxPageItem() {
+		return maxPageItem;
+	}
+
+	public void setMaxPageItem(Integer maxPageItem) {
+		this.maxPageItem = maxPageItem;
+	}
+
+	public Integer getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(Integer totalPage) {
+		this.totalPage = totalPage;
+	}
+
+	public Integer getTotalItem() {
+		return totalItem;
+	}
+
+	public void setTotalItem(Integer totalItem) {
+		this.totalItem = totalItem;
 	}
 
 	@Override

@@ -16,8 +16,8 @@ public class ProductDAO {
 
 	public List<Product> getAllProduct() {
 		List<Product> list = new ArrayList<Product>();
-		String sql = "SELECT * FROM product";
 		try {
+			String sql = "SELECT * FROM product";
 			conn = new DBContext().getConnection();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -32,8 +32,8 @@ public class ProductDAO {
 	}
 
 	public void deleteProduct(String id) {
-		String sql = "DELETE FROM `product` WHERE ID = ?";
 		try {
+			String sql = "DELETE FROM `product` WHERE ID = ?";
 			conn = new DBContext().getConnection();
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
@@ -44,8 +44,8 @@ public class ProductDAO {
 	}
 
 	public void insertProduct(String name, String price, String status) {
-		String sql = "INSERT INTO `product`(`name`, `price`,`status`) VALUES (?,?,?)";
 		try {
+			String sql = "INSERT INTO `product`(`name`, `price`,`status`) VALUES (?,?,?)";
 			conn = new DBContext().getConnection();
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, name);
@@ -60,8 +60,8 @@ public class ProductDAO {
 
 
 	public Product getProductById(String id) {
-		String sql = "SELECT * FROM `product` WHERE ID = ?";
 		try {
+			String sql = "SELECT * FROM `product` WHERE ID = ?";
 			conn = new DBContext().getConnection();
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
@@ -76,8 +76,8 @@ public class ProductDAO {
 	}
 	
 	public void updateProduct(String id, String name, String price, String status) {
-		String sql = "UPDATE `product` SET `name`=?,`price`=?,`status`=? WHERE id=?";
 		try {
+			String sql = "UPDATE `product` SET `name`=?,`price`=?,`status`=? WHERE id=?";
 			conn = new DBContext().getConnection();
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, name);
@@ -89,5 +89,55 @@ public class ProductDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int count(String txtSearch) {
+		List<Product> list = new ArrayList<Product>();
+		try {
+			String sql = "SELECT count(*) FROM product where name like ?";
+			conn = new DBContext().getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,"%" + txtSearch + "%");
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public int countPage() {
+		try {
+			String sql = "SELECT count(*) FROM product";
+			conn = new DBContext().getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public List<Product> search(String txtSearch) {
+		List<Product> list = new ArrayList<Product>();
+		try {
+			String sql = "SELECT * FROM product where name like ?";
+			conn = new DBContext().getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,"%" + txtSearch + "%");
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				list.add(new Product(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 }
